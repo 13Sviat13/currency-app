@@ -1,4 +1,4 @@
-import pycountry
+
 import requests
 from datetime import date, timedelta, datetime
 
@@ -11,10 +11,8 @@ class ExchangeRatesService:
 
     CURRENCIES = ['GBP', 'USD', 'CHF', 'EUR']
 
-
     def get_rates(self):
         url = 'https://api.privatbank.ua/p24api/exchange_rates'
-
 
         start_date = date(date.today().year, 1, 1)
         end_date = date.today()
@@ -35,14 +33,13 @@ class ExchangeRatesService:
             rates = data.get('exchangeRate')
             base_currency = data.get('baseCurrencyLit')
 
-            aware_date = timezone.make_aware(datetime.combine(current_date, datetime.min.time()), timezone.get_current_timezone())
+            aware_date = timezone.make_aware(datetime.combine(current_date, datetime.min.time()),
+                                             timezone.get_current_timezone())
 
             if rates:
                 for r in rates:
                     if r.get('currency') not in self.CURRENCIES:
                         continue
-
-
 
                     ExchangeRate.objects.update_or_create(
                         base_currency=base_currency,
@@ -54,5 +51,3 @@ class ExchangeRatesService:
                     )
 
             current_date += delta
-
-

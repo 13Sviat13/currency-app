@@ -7,6 +7,7 @@ class Rate(models.Model):
     def __str__(self):
         return self.name
 
+
 class ExchangeRateProvider(models.Model):
     name = models.CharField(max_length=20)
     api_url = models.URLField()
