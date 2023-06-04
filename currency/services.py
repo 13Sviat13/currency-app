@@ -53,7 +53,7 @@ class ExchangeRatesService:
 
             current_date += delta
 
-    def ThreadPool(self):
+    def threadPool(self):
         with ThreadPoolExecutor(max_workers=10) as pool:
             res = pool.submit(self.get_rates)
         return res.result()
